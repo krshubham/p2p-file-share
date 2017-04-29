@@ -16,4 +16,9 @@ db.connect(databaseUrl, (err) => {
 registration.registerPeer();
 
 
+process.on('exit', (code) => {
+	logger.red(`Process exited with exit code ${code}`);
+});
+
+
 
