@@ -2,6 +2,8 @@ import assert from 'assert';
 import logger from '../helpers/logger';
 import fs from 'fs';
 
+let contents = [];
+
 
 export default (io) => {
 	io.on('connection', (socket) => {
@@ -14,6 +16,34 @@ export default (io) => {
 		 * @event {sendSharedDirectory}
 		 */
 		socket.emit('sendSharedDirectory');
-		
+
+		/**
+		 * This listener gets the list of all the files that the client has
+		 * @event {readSharedDirectory}
+		 */
+		socket.on('readSharedDirectory', (data) => {
+			const indexedData = {
+				id: socket.id,
+				files: data.files,
+				port: data.port
+			}
+			contents.push(indexedData);
+			console.log(contents);
+		});
+
+		/**
+		 * Recognise the disconncted client and then remove it from the array
+		 * @event {disconnect}
+		 */
+		socket.on('disconnect', () => {
+			for(let i=0; i < contents.length; i++){
+				if(contents[i].id === socket.id){
+					contents.splice(i,1);
+					break;
+				}
+			}
+			//logging the array when we remove a client
+			console.log(contents);
+		});
 	});
 };

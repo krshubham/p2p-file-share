@@ -24,7 +24,7 @@ const io = socketIO(server);
 const socket = socketIOClient('http://localhost:7000');
 
 socketListen(io);
-socketClientListen(socket);
+socketClientListen(socket,port);
 
 app.get('/', (req,res) => {
 	res.sendFile(path.join(__dirname, '../../public/index.html'));
@@ -41,6 +41,7 @@ function listen(port){
 }
 listen(port);
 process.on('uncaughtException', (error) => {
+	console.log(error);
 	switch(error.code){
 		case 'EADDRINUSE':
 			++port;
