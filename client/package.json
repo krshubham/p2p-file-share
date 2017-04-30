@@ -1,0 +1,34 @@
+{
+  "name": "p2p-fs-client",
+  "version": "1.0.0",
+  "description": "The client application for p2p file share",
+  "main": "client-app.ks",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib",
+    "start": "npm run build && node ./lib/client-app/client-app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krshubham/p2p-file-share.git"
+  },
+  "keywords": [
+    "Kumar",
+    "Shubham",
+    "p2p"
+  ],
+  "author": "Kumar Shubham",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/krshubham/p2p-file-share/issues"
+  },
+  "homepage": "https://github.com/krshubham/p2p-file-share#readme",
+  "dependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.4.0",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "morgan": "^1.8.1",
+    "socket.io": "^1.7.3"
+  }
+}

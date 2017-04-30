@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="/bower_components/materialize/bin/materialize.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<title>Hello</title>
+</head>
+<body>
+	 <div class="row center">
+		 <h1>Welcome to P2P client App</h1>
+	 </div>
+	 <div class="container">
+		 <div class="row">
+			 <div class="card hoverable info-card">
+				 <div class="flow-text">
+					 <strong>Usage:</strong>
+					 Enter the name of the file you want to search on all the peers in the given search input
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+	 <div class="container">
+		 <form onsubmit="getFile()">
+			 
+			<div class="row">
+				<input placeholder="Enter the file name" id="fileName" type="text">
+			</div>
+		 </form>
+	 </div>
+</body>
+<script src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="/bower_components/materialize/bin/materialize.js"></script>
+<script src="/bower_components/socket.io-client/dist/socket.io.min.js"></script>
+<script src="/js/app-frontend.js"></script>
+</html>

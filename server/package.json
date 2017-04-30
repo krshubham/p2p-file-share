@@ -1,0 +1,13 @@
+{
+  "name": "p2p-fs-central-server",
+  "version": "1.0.0",
+  "description": "This application acts as the central server for the p2p file sharing",
+  "main": "app.js",
+  "repository": "https://github.com/krshubham/p2p-file-share",
+  "author": "Kumar Shubham",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^1.7.3"
+  }
+}
