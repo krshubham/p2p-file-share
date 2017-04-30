@@ -2,6 +2,7 @@ import socketIO from 'socket.io';
 import http from 'http';
 import express from 'express';
 import logger from './helpers/logger';
+import indexer from './libs/indexer';
 const port  = 7000;
 
 const app = express();
@@ -9,10 +10,8 @@ const app = express();
 const server = app.server = http.Server(app);
 const io = socketIO(server);
 
+indexer(io);
 
-io.on('connection', (socket) => {
-	logger.yellow('Client connected successfully');
-});
 
 /**
  * Let the server listen on the given port
