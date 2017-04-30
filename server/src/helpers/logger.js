@@ -38,7 +38,7 @@ export default {
 		console.log(chalk.yellow(something));
 	},
 	/**
-	 * something is logged in white color
+	 * somerthing is logged in white color
 	 * @param {*} something 
 	 */
 	white(something) {

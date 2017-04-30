@@ -29,6 +29,7 @@
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "morgan": "^1.8.1",
-    "socket.io": "^1.7.3"
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3"
   }
 }
