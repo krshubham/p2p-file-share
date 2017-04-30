@@ -4,6 +4,7 @@ import logger from './logger';
 import fs from 'fs';
 import db from './db';
 import path from 'path';
+import jsonSocket from 'json-socket';
 
 let indexer = {};
 
@@ -12,30 +13,29 @@ function sendDirInformation(client){
 	dirCollection.find({}).toArray((err, data) => {
 		const pubDir = data[0].publicPath;
 		fs.readdir(path.normalize(pubDir), (err,files) => {
-			client.write(files.toString());
+			client.sendMessage(files.toString());
 		});
 	});
 }
 
 
 indexer.createConnection = (host, port) => {
-	const client = new net.Socket();
-	client.connect(port,host, () => {
-		logger.green('Connected successfully to the central server');
+	const client = new jsonSocket(new net.Socket());
+	client.connect(port,host);
+	client.on('connect', () => {
 		sendDirInformation(client);
 	});
-
-
+	
 	client.on('error', (err) => {
 		switch(err.code){
 			case 'ECONNREFUSED':
-				logger.red(`Connection refused on ${host}:${port}`);
-				logger.red('Please check if correct server address is provided');
-				process.exit(1);
-				break;
+			logger.red(`Connection refused on ${host}:${port}`);
+			logger.red('Please check if correct server address is provided');
+			process.exit(1);
+			break;
 		}
 	});
-
+	
 	client.on('data' , (data) => {
 		console.log(data);
 	});

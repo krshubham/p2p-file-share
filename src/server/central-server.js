@@ -2,23 +2,19 @@ import net from 'net';
 import conf from './server-lib/conf';
 import chalk from 'chalk';
 import cuid from 'cuid';
+import jsonSocket from 'json-socket';
 const port = Number(conf.port);
 
+var server = net.createServer();
+server.listen(port);
 
-const server = net.createServer((server) => {
-	console.log(chalk.magenta('Server running fine!'));
-});
-
-server.on('connection', (conn) => {
-	conn.id = cuid();
-
-	conn.on('data', (data) => {
-		console.log(conn.id);
-		console.log(data.toString());
+server.on('connection', (socket) => {
+	socket = new jsonSocket(socket);
+	socket.on('message', (message) => {
+		console.log(message);
 	});
 });
 
 
 
-server.listen(7000);
 export default server;
