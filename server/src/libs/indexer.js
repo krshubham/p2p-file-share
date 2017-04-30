@@ -24,11 +24,32 @@ export default (io) => {
 		socket.on('readSharedDirectory', (data) => {
 			const indexedData = {
 				id: socket.id,
+				ip: socket.handshake.address,
 				files: data.files,
 				port: data.port
 			}
 			contents.push(indexedData);
 			console.log(contents);
+		});
+
+
+		socket.on('searchFile', (fileName) => {
+			let found = false;
+			for(var content of contents){
+				//since we are told to make simple exact match
+				if(content.files.indexOf(fileName) !== -1){
+					found = true;
+					/**
+					 * If the file is found send the details to the server
+					 */
+					socket.emit('fileFound',content);
+					break;
+				}
+			}
+			if(!found){
+				console.log('Unable to find the requested query');
+				socket.emit('fileNotFound');
+			}
 		});
 
 		/**
@@ -45,5 +66,6 @@ export default (io) => {
 			//logging the array when we remove a client
 			console.log(contents);
 		});
+
 	});
 };
