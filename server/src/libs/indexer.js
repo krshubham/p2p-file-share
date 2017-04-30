@@ -42,6 +42,7 @@ export default (io) => {
 					/**
 					 * If the file is found send the details to the server
 					 */
+					content.fileName = fileName;
 					socket.emit('fileFound',content);
 					break;
 				}
