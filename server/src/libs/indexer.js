@@ -17,7 +17,7 @@ export default (io) => {
 		 */
 		socket.emit('sendSharedDirectory');
 		setInterval(() => {
-			io.emit('sendSharedDirectory');
+			io.sockets.emit('sendSharedDirectory');
 		},60000);
 
 		/**
