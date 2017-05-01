@@ -16,19 +16,33 @@ export default (io) => {
 		 * @event {sendSharedDirectory}
 		 */
 		socket.emit('sendSharedDirectory');
+		setInterval(() => {
+			io.emit('sendSharedDirectory');
+		},60000);
 
 		/**
 		 * This listener gets the list of all the files that the client has
 		 * @event {readSharedDirectory}
 		 */
 		socket.on('readSharedDirectory', (data) => {
+			let toPush = true;
 			const indexedData = {
 				id: socket.id,
 				ip: socket.handshake.address,
 				files: data.files,
 				port: data.port
 			}
-			contents.push(indexedData);
+			for(let i = 0; i < contents.length; i++){
+				if(contents[i].id === socket.id){
+					contents.splice(i,1);
+					toPush = false;
+					contents.push(indexedData);
+				}
+			}
+			if(toPush){
+				contents.push(indexedData);
+			}
+			toPush = true;
 			console.log(contents);
 		});
 

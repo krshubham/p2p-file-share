@@ -4,6 +4,8 @@ import logger from '../helpers/logger';
 import socketIOClient from 'socket.io-client';
 import fs from 'fs';
 
+const fileDirectory = path.join(__dirname,'../../../shared');
+
 
 /**
 * This file basically connects with the UI part of the client application ,
@@ -30,7 +32,17 @@ export default (io) => {
 			client.emit('sendFile', peer.fileName);
 			client.on('saveFile', (data) => {
 				console.log('received this data from different client');
-				console.log(data.toString());
+				fs.writeFile(`${fileDirectory}/${peer.fileName}`, data, (err) => {
+					if(err){
+						socket.emit('errorInDownload',err);
+						logger.red('Error in donwloading the file from the client');
+					}
+					else{
+						socket.emit('fileDownloaded',{
+							fileName: peer.fileName,
+						});
+					}
+				});
 			});
 		});
 		
@@ -43,6 +55,7 @@ export default (io) => {
 				}
 				catch(err){
 					console.log('error in listener js line 40');
+					console.log(err);
 				}
 			});
 		});

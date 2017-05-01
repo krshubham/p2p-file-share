@@ -43,3 +43,12 @@ centralSocket.on('fileNotFound', () => {
 mySocket.on('connect_error', (error) => {
 	console.error(error);
 });
+
+mySocket.on('fileDownloaded', (data) => {
+	Materialize.toast(`File ${data.fileName} successfully Downloaded in shared directory`,2000);
+	console.log(data);
+});
+
+mySocket.on('errorInDownload', (err) => {
+	console.error(err);
+});
