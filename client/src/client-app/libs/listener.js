@@ -3,7 +3,7 @@ import path from 'path';
 import logger from '../helpers/logger';
 import socketIOClient from 'socket.io-client';
 import fs from 'fs';
-
+let start=0,end=0;
 const fileDirectory = path.join(__dirname,'../../../shared');
 
 
@@ -19,6 +19,7 @@ export default (io) => {
 		logger.green('Connection established with the client');
 		
 		socket.on('connectToPeer', (peer) => {
+			start = new Date()
 			peer.ip = peer.ip.split(':')[3];
 			/**
 			* Connect to the second client and ask it for the file
@@ -31,6 +32,7 @@ export default (io) => {
 			
 			client.emit('sendFile', peer.fileName);
 			client.on('saveFile', (data) => {
+				socket.emit('receive.start',{start: true});
 				console.log('received this data from different client');
 				fs.writeFile(`${fileDirectory}/${peer.fileName}`, data, (err) => {
 					if(err){
@@ -38,8 +40,12 @@ export default (io) => {
 						logger.red('Error in donwloading the file from the client');
 					}
 					else{
+						end = new Date()
+						let time = (end - start)/1000;
+						start = end = 0;
 						socket.emit('fileDownloaded',{
 							fileName: peer.fileName,
+							time
 						});
 					}
 				});
@@ -54,7 +60,7 @@ export default (io) => {
 					socket.emit('saveFile', data);
 				}
 				catch(err){
-					console.log('error in listener js line 40');
+					console.log('File is not present on this client');
 					console.log(err);
 				}
 			});

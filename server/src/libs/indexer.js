@@ -11,8 +11,7 @@ export default (io) => {
 		 * This event is emitted to a client whenever it joins the server.
 		 * Basically we ask the client to send us the contents of the shared directory 
 		 * and then store it somewhere
-		 * I am still thinking about the place
-		 * Might be an array, a file or a database
+		 * Stores everything in the @global {contents} Array
 		 * @event {sendSharedDirectory}
 		 */
 		socket.emit('sendSharedDirectory');
@@ -48,7 +47,9 @@ export default (io) => {
 
 
 		socket.on('searchFile', (fileName) => {
+			console.time('something');
 			let found = false;
+			console.timeEnd('something');
 			for(var content of contents){
 				//since we are told to make simple exact match
 				if(content.files.indexOf(fileName) !== -1){
@@ -64,6 +65,7 @@ export default (io) => {
 			if(!found){
 				console.log('Unable to find the requested query');
 				socket.emit('fileNotFound');
+				// console.timeEnd('something');
 			}
 		});
 

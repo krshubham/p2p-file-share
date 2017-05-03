@@ -9,8 +9,9 @@ import path from 'path';
 import morgan from 'morgan';
 import socketListen from './libs/listener';
 import socketClientListen from './libs/socketClientListener';
+import config from '../client-config';
 
-let port = 8081;
+let port = config.client.port;
 const app = express();
 
 //app.use(morgan('dev'));
@@ -21,7 +22,7 @@ app.use(express.static(path.join(__dirname,'../../public/static')));
 const server = app.server = http.Server(app);
 
 const io = socketIO(server);
-const socket = socketIOClient('http://localhost:7000');
+const socket = socketIOClient(`http://${config.server.ip}:${config.server.port}`);
 
 socketListen(io);
 socketClientListen(socket,port);
