@@ -12,6 +12,7 @@ import socketClientListen from './libs/socketClientListener';
 import config from '../client-config';
 
 let port = config.client.port;
+let serverport = config.server.port;
 const app = express();
 
 //app.use(morgan('dev'));
@@ -37,7 +38,7 @@ app.get('/', (req,res) => {
 */
 function listen(port){
 	server.listen(Number(port), () => {
-		logger.magenta(`Server is runnning on port ${port}`);
+		logger.magenta(`Server is runnning on port ${serverport}`);
 	});
 }
 listen(port);

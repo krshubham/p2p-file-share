@@ -14,6 +14,8 @@ const fileDirectory = path.join(__dirname,'../../../shared');
 * Since this is not a *FOOLPROOF* program.
 * Chill and inform {krshubham} in case of any issues.
 */
+//export default exports this fuction so that it can be used anywhere
+//io is the parameter
 export default (io) => {
 	io.on('connection', (socket) => {
 		logger.green('Connection established with the client');

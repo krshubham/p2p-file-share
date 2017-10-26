@@ -4,7 +4,7 @@ import fs from 'fs';
 
 let contents = [];
 
-
+//io is the name of the parameter
 export default (io) => {
 	io.on('connection', (socket) => {
 		/**
